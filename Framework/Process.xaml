@@ -1,0 +1,569 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(sd:DataRow)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property sap2010:Annotation.AnnotationText="Sequential counter of transaction items." Name="io_TransactionNumber" Type="InOutArgument(x:Int32)" />
+    <x:Property Name="in_strPath" Type="InArgument(x:String)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>818.4,454.4</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="50">
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Windows.Forms</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>UiPath.Platform.SyncObjects</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>System.Numerics</x:String>
+      <x:String>UiPath.Activities.System.BPO</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="80">
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Windows.Forms</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.Packaging</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="1181.6000000000001,2408.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="631.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
+    <If Condition="[in_TransactionItem(&quot;ESTADO&quot;).ToString=&quot;IN&quot;]" sap:VirtualizedContainerService.HintSize="631.2,2056" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="597.6,1796" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser - SAP" sap:VirtualizedContainerService.HintSize="564,1736" sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="cc0d38389e5b41de0447f8ed2bab5a9e" Selector="&lt;html app='chrome.exe' title='Consulta de Validez del CPE' /&gt;">
+            <ui:BrowserScope.Body>
+              <ActivityAction x:TypeArguments="x:Object">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="530.4,1525.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Name="strTemp" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into  -  RUC" EmptyField="True" sap:VirtualizedContainerService.HintSize="496.8,56.8" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="[in_TransactionItem(&quot;RUC&quot;).ToString]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="cb7c4dc5-2ea7-40b6-9e4a-6daa306a67ce" InformativeScreenshot="9c69fd28b021c0c9e9ddd5ddbbbed52e" Selector="&lt;webctrl tag='INPUT' type='text' /&gt;" WaitForReady="COMPLETE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:TypeInto>
+                  <Switch x:TypeArguments="x:Int32" DisplayName="Switch" Expression="[CInt(in_TransactionItem(&quot;TIPO_DOC&quot;).ToString)]" sap:VirtualizedContainerService.HintSize="496.8,288.8" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+                    <ui:SelectItem AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" x:Key="1" DisplayName="Select Item - TIPO DOC" sap:VirtualizedContainerService.HintSize="358.4,24.8" sap2010:WorkflowViewState.IdRef="SelectItem_1" Item="FACTURA ELECTRONICA">
+                      <ui:SelectItem.Items>
+                        <scg:List x:TypeArguments="x:String" Capacity="32">
+                          <x:String>RECIBO POR HONORARIOS ELECTRONICO</x:String>
+                          <x:String>FACTURA ELECTRONICA</x:String>
+                          <x:String>BOLETA ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO DE RHE ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>TICKET POS</x:String>
+                          <x:String>TICKET ME</x:String>
+                          <x:String>NOTA CREDITO ME</x:String>
+                          <x:String>ENVIO RESUMEN - FACTURA</x:String>
+                          <x:String>ENVIO RESUMEN - BOLETA</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE CREDITO</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE DEBITO</x:String>
+                          <x:String>ENVIO RESUMEN - TICKECT</x:String>
+                          <x:String>COMPROBANTE DE PERCEPCIÓN</x:String>
+                          <x:String>COMPROBANTE DE RETENCIÓN</x:String>
+                          <x:String>PÓLIZA DE ADJUDICACIÓN ELECTRÓNICA</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR UN TERCERO</x:String>
+                          <x:String>DOCUMENTO DEL OPERADOR</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR ELLAS MISMAS</x:String>
+                        </scg:List>
+                      </ui:SelectItem.Items>
+                      <ui:SelectItem.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="e5a3f5de-d4c3-4408-910a-1a666fc05e92" InformativeScreenshot="42365fb6a471b6d2aabff37ee972b425" Selector="&lt;webctrl tag='SELECT' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:SelectItem.Target>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:SelectItem>
+                    <ui:SelectItem AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" x:Key="14" DisplayName="Select Item - TIPO DOC" sap:VirtualizedContainerService.HintSize="358.4,24.8" sap2010:WorkflowViewState.IdRef="SelectItem_2" Item="ENVIO RESUMEN - FACTURA">
+                      <ui:SelectItem.Items>
+                        <scg:List x:TypeArguments="x:String" Capacity="32">
+                          <x:String>RECIBO POR HONORARIOS ELECTRONICO</x:String>
+                          <x:String>FACTURA ELECTRONICA</x:String>
+                          <x:String>BOLETA ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO DE RHE ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>TICKET POS</x:String>
+                          <x:String>TICKET ME</x:String>
+                          <x:String>NOTA CREDITO ME</x:String>
+                          <x:String>ENVIO RESUMEN - FACTURA</x:String>
+                          <x:String>ENVIO RESUMEN - BOLETA</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE CREDITO</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE DEBITO</x:String>
+                          <x:String>ENVIO RESUMEN - TICKECT</x:String>
+                          <x:String>COMPROBANTE DE PERCEPCIÓN</x:String>
+                          <x:String>COMPROBANTE DE RETENCIÓN</x:String>
+                          <x:String>PÓLIZA DE ADJUDICACIÓN ELECTRÓNICA</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR UN TERCERO</x:String>
+                          <x:String>DOCUMENTO DEL OPERADOR</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR ELLAS MISMAS</x:String>
+                        </scg:List>
+                      </ui:SelectItem.Items>
+                      <ui:SelectItem.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="e5a3f5de-d4c3-4408-910a-1a666fc05e92" InformativeScreenshot="42365fb6a471b6d2aabff37ee972b425" Selector="&lt;webctrl tag='SELECT' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:SelectItem.Target>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:SelectItem>
+                    <Throw x:Key="50" Exception="[new BusinessRuleException(&quot;NO conocemos&quot;)]" sap:VirtualizedContainerService.HintSize="334.4,90.4" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                    <ui:SelectItem AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" x:Key="7" DisplayName="Select Item - TIPO DOC" sap:VirtualizedContainerService.HintSize="358.4,24.8" sap2010:WorkflowViewState.IdRef="SelectItem_4" Item="ENVIO RESUMEN - NOTA DE CREDITO">
+                      <ui:SelectItem.Items>
+                        <scg:List x:TypeArguments="x:String" Capacity="32">
+                          <x:String>RECIBO POR HONORARIOS ELECTRONICO</x:String>
+                          <x:String>FACTURA ELECTRONICA</x:String>
+                          <x:String>BOLETA ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO DE RHE ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>TICKET POS</x:String>
+                          <x:String>TICKET ME</x:String>
+                          <x:String>NOTA CREDITO ME</x:String>
+                          <x:String>ENVIO RESUMEN - FACTURA</x:String>
+                          <x:String>ENVIO RESUMEN - BOLETA</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE CREDITO</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE DEBITO</x:String>
+                          <x:String>ENVIO RESUMEN - TICKECT</x:String>
+                          <x:String>COMPROBANTE DE PERCEPCIÓN</x:String>
+                          <x:String>COMPROBANTE DE RETENCIÓN</x:String>
+                          <x:String>PÓLIZA DE ADJUDICACIÓN ELECTRÓNICA</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR UN TERCERO</x:String>
+                          <x:String>DOCUMENTO DEL OPERADOR</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR ELLAS MISMAS</x:String>
+                        </scg:List>
+                      </ui:SelectItem.Items>
+                      <ui:SelectItem.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="e5a3f5de-d4c3-4408-910a-1a666fc05e92" InformativeScreenshot="42365fb6a471b6d2aabff37ee972b425" Selector="&lt;webctrl tag='SELECT' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:SelectItem.Target>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:SelectItem>
+                    <ui:SelectItem AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" x:Key="2" DisplayName="Select Item - TIPO DOC" sap:VirtualizedContainerService.HintSize="358.4,24.8" sap2010:WorkflowViewState.IdRef="SelectItem_5" Item="RECIBO POR HONORARIOS ELECTRONICO">
+                      <ui:SelectItem.Items>
+                        <scg:List x:TypeArguments="x:String" Capacity="32">
+                          <x:String>RECIBO POR HONORARIOS ELECTRONICO</x:String>
+                          <x:String>FACTURA ELECTRONICA</x:String>
+                          <x:String>BOLETA ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO DE RHE ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>TICKET POS</x:String>
+                          <x:String>TICKET ME</x:String>
+                          <x:String>NOTA CREDITO ME</x:String>
+                          <x:String>ENVIO RESUMEN - FACTURA</x:String>
+                          <x:String>ENVIO RESUMEN - BOLETA</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE CREDITO</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE DEBITO</x:String>
+                          <x:String>ENVIO RESUMEN - TICKECT</x:String>
+                          <x:String>COMPROBANTE DE PERCEPCIÓN</x:String>
+                          <x:String>COMPROBANTE DE RETENCIÓN</x:String>
+                          <x:String>PÓLIZA DE ADJUDICACIÓN ELECTRÓNICA</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR UN TERCERO</x:String>
+                          <x:String>DOCUMENTO DEL OPERADOR</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR ELLAS MISMAS</x:String>
+                        </scg:List>
+                      </ui:SelectItem.Items>
+                      <ui:SelectItem.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="e5a3f5de-d4c3-4408-910a-1a666fc05e92" InformativeScreenshot="42365fb6a471b6d2aabff37ee972b425" Selector="&lt;webctrl tag='SELECT' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:SelectItem.Target>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:SelectItem>
+                    <ui:SelectItem AlterIfDisabled="{x:Null}" ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" x:Key="3" DisplayName="Select Item - TIPO DOC" sap:VirtualizedContainerService.HintSize="358.4,156" sap2010:WorkflowViewState.IdRef="SelectItem_6" Item="BOLETA ELECTRONICA">
+                      <ui:SelectItem.Items>
+                        <scg:List x:TypeArguments="x:String" Capacity="32">
+                          <x:String>RECIBO POR HONORARIOS ELECTRONICO</x:String>
+                          <x:String>FACTURA ELECTRONICA</x:String>
+                          <x:String>BOLETA ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO DE RHE ELECTRONICA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - BOLETA</x:String>
+                          <x:String>NOTA DE CREDITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>NOTA DE DEBITO ELECTRONICA - FACTURA</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION REMITENTE COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA - BIENES FISCALIZABLES</x:String>
+                          <x:String>GUIA DE REMISION TRANSPORTISTA COMPLEMENTARIA - BIENES FISCALIZABLES</x:String>
+                          <x:String>TICKET POS</x:String>
+                          <x:String>TICKET ME</x:String>
+                          <x:String>NOTA CREDITO ME</x:String>
+                          <x:String>ENVIO RESUMEN - FACTURA</x:String>
+                          <x:String>ENVIO RESUMEN - BOLETA</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE CREDITO</x:String>
+                          <x:String>ENVIO RESUMEN - NOTA DE DEBITO</x:String>
+                          <x:String>ENVIO RESUMEN - TICKECT</x:String>
+                          <x:String>COMPROBANTE DE PERCEPCIÓN</x:String>
+                          <x:String>COMPROBANTE DE RETENCIÓN</x:String>
+                          <x:String>PÓLIZA DE ADJUDICACIÓN ELECTRÓNICA</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR UN TERCERO</x:String>
+                          <x:String>DOCUMENTO DEL OPERADOR</x:String>
+                          <x:String>DOCUMENTO DEL ADQUIRIENTE CON TARJETAS EMITIDAS POR ELLAS MISMAS</x:String>
+                        </scg:List>
+                      </ui:SelectItem.Items>
+                      <ui:SelectItem.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="e5a3f5de-d4c3-4408-910a-1a666fc05e92" InformativeScreenshot="42365fb6a471b6d2aabff37ee972b425" Selector="&lt;webctrl tag='SELECT' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:SelectItem.Target>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:SelectItem>
+                  </Switch>
+                  <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into  - NUM" EmptyField="True" sap:VirtualizedContainerService.HintSize="496.8,56.8" sap2010:WorkflowViewState.IdRef="TypeInto_3" Text="[in_TransactionItem(&quot;SERIEDOC&quot;).ToString]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="ad6b6a93-d11c-4cfd-a37b-5d4ebb153619" InformativeScreenshot="dde9872265d39696baf6e03ee144f302" Selector="&lt;webctrl name='num_serie' tag='INPUT' type='text' /&gt;" WaitForReady="COMPLETE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:TypeInto>
+                  <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into -  SERIE" EmptyField="True" sap:VirtualizedContainerService.HintSize="496.8,56.8" sap2010:WorkflowViewState.IdRef="TypeInto_4" Text="[in_TransactionItem(&quot;NUMERODOC&quot;).ToString]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="56088795-67ff-4995-9aa9-79c84b06cdca" InformativeScreenshot="82fbac823b35aafbbb6c02ff643b51f0" Selector="&lt;webctrl name='num_comprob' tag='INPUT' type='text' /&gt;" WaitForReady="COMPLETE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:TypeInto>
+                  <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into  - FECHA EMISION" EmptyField="True" sap:VirtualizedContainerService.HintSize="496.8,56.8" sap2010:WorkflowViewState.IdRef="TypeInto_5" Text="[in_TransactionItem(&quot;FECHA&quot;).ToString]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="eed432e9-6cd2-42ff-b4de-8c596e8dea57" InformativeScreenshot="f7a1dbbc0642a8654e49f8bc6bfa6ca7" Selector="&lt;webctrl id='fec_emision' tag='INPUT' /&gt;" WaitForReady="COMPLETE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:TypeInto>
+                  <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'LABEL'" sap:VirtualizedContainerService.HintSize="496.8,56.8" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="4a8688e5-915b-499c-afcb-a663bc484b54" InformativeScreenshot="9a0f7af76ac465af002096eb418a0e6a" Selector="&lt;webctrl aaname='Total por Honorarios o Importe Total*' tag='LABEL' /&gt;" WaitForReady="COMPLETE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:Click.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:Click>
+                  <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into  - FECHA" sap:VirtualizedContainerService.HintSize="496.8,188" sap2010:WorkflowViewState.IdRef="TypeInto_6" Text="[in_TransactionItem(&quot;TOTAL&quot;).ToString.Replace(&quot;-&quot;,&quot;&quot;)+ &quot;[k(enter)]&quot;]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="eef4b40b-6659-4f88-b16c-344513fcd90c" InformativeScreenshot="4fec44efa6c3bdf9a875d6040daa7306" Selector="&lt;webctrl name='cantidad' tag='INPUT' type='text' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:TypeInto>
+                  <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="2500" DisplayName="Clic -  BUSCAR" sap:VirtualizedContainerService.HintSize="496.8,139.2" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d51a1a79-c528-4def-a71f-05423574c660" InformativeScreenshot="01522bcf82587980f7f33246a77396c7" Selector="&lt;webctrl tag='INPUT' type='Button' /&gt;" WaitForReady="COMPLETE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:Click.Target>
+                  </ui:Click>
+                  <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'TD'" sap:VirtualizedContainerService.HintSize="496.8,139.2" sap2010:WorkflowViewState.IdRef="GetValue_1">
+                    <ui:GetValue.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="2cdf68f3-232b-4e80-b69a-70e23f035388" InformativeScreenshot="6cbb3576fa9247fcbdae57bcd1677be6" Selector="&lt;webctrl aaname='Resultado de la Consulta' css-selector='body&amp;gt;center&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table' tableRow='1' tag='TABLE' /&gt;&lt;webctrl tableRow='2' tag='TD' /&gt;" WaitForReady="COMPLETE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:GetValue.Target>
+                    <ui:GetValue.Value>
+                      <OutArgument x:TypeArguments="x:String">[strTemp]</OutArgument>
+                    </ui:GetValue.Value>
+                  </ui:GetValue>
+                  <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DelayMS="2500" DisplayName="Click 'INPUT'" sap:VirtualizedContainerService.HintSize="496.8,139.2" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="50c1fcce-7c6c-4672-b772-49aaac92579d" InformativeScreenshot="944987edeb444941c81375eedd960e9c" Selector="&lt;webctrl css-selector='body&amp;gt;center&amp;gt;div&amp;gt;table' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='INPUT' aaname='Anterior' /&gt;" WaitForReady="COMPLETE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:Click.Target>
+                  </ui:Click>
+                  <ui:WriteCell Cell="[&quot;H&quot;+CStr(io_TransactionNumber+1)]" DisplayName="Write Cell Workbook" sap:VirtualizedContainerService.HintSize="496.8,148" sap2010:WorkflowViewState.IdRef="WriteCell_1" SheetName="BASE" Text="[strTemp]" WorkbookPath="[path.Combine(in_strPath,&quot;Data&quot;,&quot;Input&quot;,&quot;BaseTrabajo.xlsx&quot;)]" />
+                  <ui:WriteCell Cell="[&quot;I&quot;+CStr(io_TransactionNumber+1)]" DisplayName="Write Cell Workbook" sap:VirtualizedContainerService.HintSize="496.8,139.2" sap2010:WorkflowViewState.IdRef="WriteCell_2" SheetName="BASE" Text="FI" WorkbookPath="[path.Combine(in_strPath,&quot;Data&quot;,&quot;Input&quot;,&quot;BaseTrabajo.xlsx&quot;)]" />
+                </Sequence>
+              </ActivityAction>
+            </ui:BrowserScope.Body>
+          </ui:BrowserScope>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Else>
+    </If>
+    <ui:Comment DisplayName="Comment (placeholder)" sap:VirtualizedContainerService.HintSize="631.2,79.2" sap2010:WorkflowViewState.IdRef="Comment_1" Text="//  Invoke steps of the process" />
+  </Sequence>
+</Activity>
